@@ -1,31 +1,63 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class CloudMovement : MonoBehaviour
 {
-    [SerializeField] private Transform c_centr;
-    [SerializeField] private float c_speed = 0.02f;
-    [SerializeField] private Vector3 axis;
+    [SerializeField]
+    private Cloud m_cloud;
+    [SerializeField]
+    private Transform[] m_points;
+    private Transform m_current;
+    private int m_currentIndex = 0;
 
-    [SerializeField] ParticleSystem rainParticalSystem;
+    [SerializeField]
+    private float m_speed = 5f;
 
-    void Update()
+    public void Action()
     {
-        if (Input.GetKey(KeyCode.Z))
+        Debug.Log("Action");
+
+        if (m_current == null)
         {
-            rainParticalSystem.Play();
-            Movement();
+            m_cloud.StopRain();
+            m_current = m_points[m_currentIndex];
+
+            if (++m_currentIndex >= m_points.Length)
+            {
+                m_currentIndex = 0;
+            }
         }
-      
     }
 
-   
-    void Movement()
+
+    private void Update()
     {
-        transform.RotateAround(c_centr.transform.position, axis, c_speed *Time.deltaTime);
+        MoveToTarget();
     }
+
+    private void MoveToTarget()
+    {
+
+        if (m_current != null)
+        {
+            var cloudPos = m_cloud.transform.position;
+            var pos = m_current.position;
+            pos.y = cloudPos.y;
+            cloudPos = Vector3.Lerp(cloudPos, pos, Time.deltaTime * m_speed);
+
+            if (Vector3.Distance(cloudPos, pos) < 0.1f)
+            {
+                m_current = null;
+                OnMoveComplete();
+            }
+
+            m_cloud.transform.position = cloudPos;
+        }
+    }
+
+    private void OnMoveComplete()
+    {
+        m_cloud.StartRain();
+    }
+
 
 }
-

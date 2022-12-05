@@ -4,13 +4,8 @@ public class ToolChange : MonoBehaviour
 {
     private int t_currentWeapon=0;
     [SerializeField] private Transform[] t_weapons;
-    void Start()
-    {
-        
-    }
 
-  
-    void Update()
+    public void Action()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
