@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour
     private CloudMovement m_cloudController;
 
     [SerializeField]
-    private ToolChange m_toolChangeController;
+    //private ToolChange m_toolChangeController;
     void Update()
     {
          if (Input.GetKeyDown(KeyCode.X) && Time.time > nextSpawn)
@@ -32,12 +32,6 @@ public class GameController : MonoBehaviour
             m_cloudController.Action();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("Key Tabe pressed ");
-
-            m_toolChangeController.Action();
-        }
     }
    
 }
