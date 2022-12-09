@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameControll : MonoBehaviour
+namespace Game{
+public class GameController : MonoBehaviour
 {
     [SerializeField]
     private SpawnStone m_stone;
@@ -19,4 +20,5 @@ public class GameControll : MonoBehaviour
             m_timer -= m_delay;
         }
     }
+}
 }
